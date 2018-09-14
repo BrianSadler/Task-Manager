@@ -7,8 +7,15 @@
 //
 
 import Foundation
+
 class Menu {
+    let Functions = functions()
     var userQuit = false
+    
+    func quit() {
+        userQuit = true
+        print("Thanks for using the Task Manager!")
+    }
     
     func menuStart() {
         repeat{
@@ -21,7 +28,9 @@ class Menu {
         5. Show all uncompleted tasks
         6. Show all completed tasks
         7. Mark completed task as incomplete
-        8. Quit
+        8. Edit a task
+        9. Quit
+
         """)
             var input = getInput()
             while validateInput(input) == false {
@@ -55,25 +64,61 @@ class Menu {
     func handleInput (_ input: String) {
         switch input {
         case "1":
-            print("up")
+            Functions.addTask()
+            sleep(2)
         case "2":
-            print("up")
+            Functions.removeTask()
+            sleep(2)
         case "3":
-            print("up")
+            Functions.showTasks()
+            sleep(2)
         case "4":
-            print("up")
+            Functions.completeTask()
+            sleep(4)
         case "5":
-            print("up")
+        Functions.listUncompleted()
         case "6":
-            print("up")
+            Functions.listCompleted()
+            sleep(2)
         case "7":
-            print("up")
+        Functions.setTaskUncomplete()
+            sleep(2)
         case "8":
-            print("up")
+            Functions.editTask()
+            sleep(2)
         case "9":
-            print("up")
+            quit()
         default:
             break
         }
     }
 }
+extension Array where Element == Task {
+    func printElements() {       //calling print element will print the game titles and the index they are located at.
+        for (index, task) in self.enumerated() {
+            print("\(index). \(task.title), \(task.description)")
+        }
+    }
+}
+func getIndex(maxIndex: Int) -> Int {
+    var validInput: Int? = nil
+    repeat {
+        var userInput = Int(readLine()!)
+        
+        //If the user has entered something that can't be converted to an Int, make them put in more input
+        while userInput == nil {
+            print("Invalid input. Please enter a usable index.")
+            userInput = Int(readLine()!)
+        }
+        
+        if userInput! < maxIndex && userInput! >= 0 {
+            validInput = userInput
+        } else {
+            print("Please enter a valid index.")
+        }
+    } while validInput == nil
+    
+    return validInput!
+}
+
+

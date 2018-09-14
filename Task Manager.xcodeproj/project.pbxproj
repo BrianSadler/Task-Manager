@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		20FEF46D214A98980058BEA1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FEF46C214A98980058BEA1 /* main.swift */; };
 		20FEF474214A9AEF0058BEA1 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FEF473214A9AEF0058BEA1 /* Menu.swift */; };
+		20FEF476214ADFE90058BEA1 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FEF475214ADFE90058BEA1 /* Functions.swift */; };
+		20FEF478214AE1840058BEA1 /* Task Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FEF477214AE1840058BEA1 /* Task Class.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +29,8 @@
 		20FEF469214A98980058BEA1 /* Task Manager */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Task Manager"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20FEF46C214A98980058BEA1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		20FEF473214A9AEF0058BEA1 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		20FEF475214ADFE90058BEA1 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		20FEF477214AE1840058BEA1 /* Task Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task Class.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,8 @@
 			children = (
 				20FEF46C214A98980058BEA1 /* main.swift */,
 				20FEF473214A9AEF0058BEA1 /* Menu.swift */,
+				20FEF475214ADFE90058BEA1 /* Functions.swift */,
+				20FEF477214AE1840058BEA1 /* Task Class.swift */,
 			);
 			path = "Task Manager";
 			sourceTree = "<group>";
@@ -122,8 +128,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20FEF478214AE1840058BEA1 /* Task Class.swift in Sources */,
 				20FEF474214A9AEF0058BEA1 /* Menu.swift in Sources */,
 				20FEF46D214A98980058BEA1 /* main.swift in Sources */,
+				20FEF476214ADFE90058BEA1 /* Functions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

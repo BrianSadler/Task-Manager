@@ -7,9 +7,10 @@
 //
 
 import Foundation
+let currentCalander = Calendar.current
 class functions {
     
-    private var taskArray:[Task] = [Task(title: "Do the dishes", description: "The kitchen sink is full of dishes"),Task(title: "Do the laundry", description: "There is a pile of dirty clothes in the hamper")]
+    private var taskArray:[Task] = []
     var uncompletedTasks: [Task] {
         return taskArray.filter {$0.completed == false} // returns games that do have a due date (checked out)
     }
@@ -28,15 +29,23 @@ class functions {
         }
      
         print("Please describe the task")
-        var newDescription = readLine()
-
-    let newTask = Task(title: taskTitle!, description: newDescription!)
+        let newDescription = readLine()
+        print("How many days do you have to complete the task?")
+        let currentCalander = Calendar.current
+        let numOfDays = Int(readLine()!)
+        let completeBy = currentCalander.date(byAdding: .day, value: numOfDays!, to: Date())
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        print("The task needs to be completed by \(dateFormatter.string(from: completeBy!))")
+        let newTask = Task(title: taskTitle!, description: newDescription!, dueDate: completeBy!)
+        
         print("""
  What is the priority of the task?
  1 = Highest
  2 = Second Highest
  3 = Third Highest
  4 = Lowest
+ Any other input will set it at lowest priority
  """)
     let priorityInput = readLine()
         switch priorityInput {
@@ -53,6 +62,7 @@ class functions {
         }
     print("Task added!")
     }
+    
     func removeTask() {
         taskArray.printElements()
         
@@ -111,9 +121,47 @@ class functions {
         task.title = readLine()!
         print("How should the task have been described?")
         task.description = readLine()!
+        print("Does the priority need to change, yes or no?")
+        var userAnswer = readLine()!
+        if userAnswer == "Yes" || userAnswer == "Y" || userAnswer == "yes" || userAnswer == "y" {
+            print("""
+ What is the priority of the task?
+ 1 = Highest
+ 2 = Second Highest
+ 3 = Third Highest
+ 4 = Lowest
+ Any other input will set it at lowest priority
+ """)
+            let priorityInput = readLine()
+            switch priorityInput {
+            case "1":
+                taskArray.insert(task, at: 0)
+            case "2":
+                taskArray.insert(task, at: 1)
+            case "3":
+                taskArray.insert(task, at: 2)
+            case "4":
+                taskArray.insert(task, at: taskArray.endIndex)
+            default:
+                taskArray.append(task)
+            }
+           
+        }
+        print("Does the date the task needs to be done by need to change, yes or no?")
+        var userAnswer2 = readLine()!
+        if userAnswer2 == "Yes" || userAnswer == "Y" || userAnswer == "yes" || userAnswer == "y" {
+            print("In how many days should the task completed by?")
+            let currentCalander = Calendar.current
+            let numOfDays = Int(readLine()!)
+            let completeBy = currentCalander.date(byAdding: .day, value: numOfDays!, to: Date())
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            let dateString = dateFormatter.string(from: task.dueDate!)
+            print("\(task.title) should now be complete on \(dateString) ")
+            
+        }
         print("Task has been edited!")
+        
     }
-   
 
 }
-

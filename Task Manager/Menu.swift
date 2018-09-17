@@ -96,7 +96,11 @@ class Menu {
 extension Array where Element == Task {
     func printElements() {       //calling print element will print the game titles and the index they are located at.
         for (index, task) in self.enumerated() {
-            print("\(index). \(task.title), \(task.description)")
+            //Make a date formatter to format the due date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            let dateString = dateFormatter.string(from: task.dueDate!)
+            print("\(index). \(task.title), \(task.description), \(dateString)")
         }
     }
 }

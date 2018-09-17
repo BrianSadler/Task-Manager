@@ -12,9 +12,10 @@ class Task {
     var description: String
     var completed = false // tasks start as not completed
     var dueDate: Date?
-    init(title: String, description: String) {    
+    init(title: String, description: String, dueDate: Date) {
         self.title = title
         self.description = description
+        self.dueDate = dueDate
     }
     
 }

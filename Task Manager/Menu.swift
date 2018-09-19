@@ -7,8 +7,10 @@
 //
 
 import Foundation
+ var organinzedArray:[Task] = []
 
 class Menu {
+
     let Functions = functions()
     var userQuit = false
     
@@ -93,17 +95,25 @@ class Menu {
         }
     }
 }
+func sortArray(tasks: [Task]) -> [Task] {
+    
+    return tasks.sorted(by: { (task1, task2) -> Bool in
+        
+        return task1.priority.rawValue < task2.priority.rawValue
+    })
+}
 extension Array where Element == Task {
-    func printElements() {       //calling print element will print the game titles and the index they are located at.
-        for (index, task) in self.enumerated() {
-            //Make a date formatter to format the due date
+    func printElements() {
+        menu.Functions.taskArray = sortArray(tasks: menu.Functions.taskArray)
+        for (index, task) in menu.Functions.taskArray.enumerated() {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy"
             let dateString = dateFormatter.string(from: task.dueDate!)
-            print("\(index). \(task.title), \(task.description), \(dateString)")
+            print("\(index). \(task.title), \(task.description), \(dateString), Priority: \(task.priority)")
+            }
         }
     }
-}
+
 func getIndex(maxIndex: Int) -> Int {
     var validInput: Int? = nil
     repeat {
@@ -124,5 +134,6 @@ func getIndex(maxIndex: Int) -> Int {
     
     return validInput!
 }
+
 
 

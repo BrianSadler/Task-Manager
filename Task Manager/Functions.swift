@@ -7,18 +7,42 @@
 //
 
 import Foundation
-let currentCalander = Calendar.current
+
+let men = Menu()
+
 class functions {
     
-    private var taskArray:[Task] = []
+    var taskArray:[Task] = []
     var uncompletedTasks: [Task] {
         return taskArray.filter {$0.completed == false} // returns games that do have a due date (checked out)
     }
     var completedTasks: [Task] {
         return taskArray.filter {$0.completed == true} // returns games that do have a due date (checked out)
     }
+    func getPriority() -> String {
+        
+        var input: String? = nil
+        
+        repeat {
+            
+            let line = readLine()!.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            if line == "Low" || line == "High"  {
+                
+                input = line
+                
+            } else {
+                
+                print("Invalid input")
+            }
+            
+        } while input == nil
+        
+        return input!
+    }
     
     func addTask() {
+        var priorityChoice: Task.PrioritySelection!
         print("What task needs doing?")
         var taskTitle = readLine()
         while taskTitle == nil || taskTitle == "" {
@@ -37,31 +61,31 @@ class functions {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         print("The task needs to be completed by \(dateFormatter.string(from: completeBy!))")
-        let newTask = Task(title: taskTitle!, description: newDescription!, dueDate: completeBy!)
-        
-        print("""
- What is the priority of the task?
- 1 = Highest
- 2 = Second Highest
- 3 = Third Highest
- 4 = Lowest
- Any other input will set it at lowest priority
- """)
-    let priorityInput = readLine()
-        switch priorityInput {
-        case "1":
-              taskArray.insert(newTask, at: 0)
-        case "2":
-            taskArray.insert(newTask, at: 1)
-        case "3":
-            taskArray.insert(newTask, at: 2)
-        case "4":
-            taskArray.insert(newTask, at: taskArray.endIndex)
-        default:
-            taskArray.append(newTask)
+        print("What is the priority of the task? Input High or Low.")
+         let priorityInput = getPriority()
+        if priorityInput == "High" {
+            
+            priorityChoice = .High
+            
         }
+        else if priorityInput == "Low" {
+            
+            priorityChoice = .Low
+        }
+        
+      
+        let newTask = Task(title: taskTitle!, description: newDescription!, dueDate: completeBy!, priority: priorityChoice! )
+        taskArray.append(newTask)
+       
+    
+          
+           
+        
+        
     print("Task added!")
     }
+    
+    //END OF ADD TASK
     
     func removeTask() {
         taskArray.printElements()
@@ -84,6 +108,7 @@ class functions {
     func showTasks()
     {    print("These are your current tasks")
          taskArray.printElements()
+        
     }
     func listCompleted() {
         if completedTasks.isEmpty{
@@ -118,44 +143,39 @@ class functions {
         uncompletedTasks.printElements()
         let task = uncompletedTasks[getIndex(maxIndex: uncompletedTasks.count)]
         print("What should the task have been named?")
-        task.title = readLine()!
+        let editedTitle = readLine()!
+        task.title = editedTitle
         print("How should the task have been described?")
-        task.description = readLine()!
+        let editedDescription = readLine()!
+        task.description = editedDescription
         print("Does the priority need to change, yes or no?")
         var userAnswer = readLine()!
         if userAnswer == "Yes" || userAnswer == "Y" || userAnswer == "yes" || userAnswer == "y" {
-            print("""
- What is the priority of the task?
- 1 = Highest
- 2 = Second Highest
- 3 = Third Highest
- 4 = Lowest
- Any other input will set it at lowest priority
- """)
-            let priorityInput = readLine()
-            switch priorityInput {
-            case "1":
-                taskArray.insert(task, at: 0)
-            case "2":
-                taskArray.insert(task, at: 1)
-            case "3":
-                taskArray.insert(task, at: 2)
-            case "4":
-                taskArray.insert(task, at: taskArray.endIndex)
-            default:
-                taskArray.append(task)
+        print("What is the priority of the task? Input High or Low.")
+            var priorityChoice: Task.PrioritySelection!
+            let priorityInputEdit = readLine()
+            if priorityInputEdit == "High" {
+                
+                priorityChoice = .High
+                
             }
+            else if priorityInputEdit == "Low" {
+                
+                priorityChoice = .Low
+            }
+            task.priority = priorityChoice
            
         }
         print("Does the date the task needs to be done by need to change, yes or no?")
         var userAnswer2 = readLine()!
-        if userAnswer2 == "Yes" || userAnswer == "Y" || userAnswer == "yes" || userAnswer == "y" {
+        if userAnswer2 == "Yes" || userAnswer2 == "Y" || userAnswer2 == "yes" || userAnswer2 == "y" {
             print("In how many days should the task completed by?")
             let currentCalander = Calendar.current
             let numOfDays = Int(readLine()!)
-            let completeBy = currentCalander.date(byAdding: .day, value: numOfDays!, to: Date())
+            var completeBy = currentCalander.date(byAdding: .day, value: numOfDays!, to: Date())
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy"
+            task.dueDate = completeBy
             let dateString = dateFormatter.string(from: task.dueDate!)
             print("\(task.title) should now be complete on \(dateString) ")
             
@@ -163,5 +183,7 @@ class functions {
         print("Task has been edited!")
         
     }
-
+   
 }
+
+

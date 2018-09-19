@@ -12,10 +12,17 @@ class Task {
     var description: String
     var completed = false // tasks start as not completed
     var dueDate: Date?
-    init(title: String, description: String, dueDate: Date) {
+    var priority: PrioritySelection
+    enum PrioritySelection: Int {
+    case High = 1
+    case Low = 2
+    }
+    init(title: String, description: String, dueDate: Date, priority:PrioritySelection ) {
         self.title = title
         self.description = description
         self.dueDate = dueDate
+        self.priority = priority
+       
     }
     
 }

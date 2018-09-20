@@ -58,7 +58,7 @@ class Menu {
         return input!
     }
     func validateInput(_ input: String) -> Bool {
-        let menuOptions = Array(1...9)
+        let menuOptions = Array(1...10)
         
         guard let number = Int(input) else { return false }
         return menuOptions.contains(number)
@@ -90,6 +90,9 @@ class Menu {
             sleep(2)
         case "9":
             quit()
+        case "10":
+            Functions.easter()
+            sleep(5)
         default:
             break
         }
@@ -109,7 +112,7 @@ extension Array where Element == Task {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy"
             let dateString = dateFormatter.string(from: task.dueDate!)
-            print("\(index). \(task.title), \(task.description), \(dateString), Priority: \(task.priority)")
+            print("\(index). \(task.title), \(task.Taskdescription), \(dateString), Priority: \(task.priority)")
             }
         }
     }

@@ -6,18 +6,18 @@
 //  Copyright © 2018 Brian Sadler. All rights reserved.
 //
 
-import Foundation
 
+import Foundation
 let men = Menu()
 
 class functions {
     
     var taskArray:[Task] = []
     var uncompletedTasks: [Task] {
-        return taskArray.filter {$0.completed == false} // returns games that do have a due date (checked out)
+        return taskArray.filter {$0.completed == false} // returns  tasks that are not completed
     }
     var completedTasks: [Task] {
-        return taskArray.filter {$0.completed == true} // returns games that do have a due date (checked out)
+        return taskArray.filter {$0.completed == true} // returns tasks that are competed
     }
     func getPriority() -> String {
         
@@ -30,7 +30,7 @@ class functions {
             if line == "Low" || line == "High"  {
                 
                 input = line
-                
+                 
             } else {
                 
                 print("Invalid input")
@@ -40,7 +40,36 @@ class functions {
         
         return input!
     }
-    
+    func getDay() -> Int {
+        
+        var num: Int? = nil
+        
+        repeat {
+            
+            let line = Int(readLine()!)
+            
+            guard let _ = line else {
+                
+                print("Invalid input! Please try again:")
+                
+                continue
+                
+            }
+            if line! >= 0 {
+                
+                num = line
+                
+            } else {
+                
+                print("Invalid input! Please try again:")
+                num = nil
+            }
+            
+        } while num == nil
+        
+        return num!
+        
+    }
     func addTask() {
         var priorityChoice: Task.PrioritySelection!
         print("What task needs doing?")
@@ -51,18 +80,18 @@ class functions {
             print("Describe the task")
             
         }
-     
+        
         print("Please describe the task")
         let newDescription = readLine()
         print("How many days do you have to complete the task?")
         let currentCalander = Calendar.current
-        let numOfDays = Int(readLine()!)
-        let completeBy = currentCalander.date(byAdding: .day, value: numOfDays!, to: Date())
+        let numOfDays = getDay()
+        let completeBy = currentCalander.date(byAdding: .day, value: numOfDays, to: Date())
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         print("The task needs to be completed by \(dateFormatter.string(from: completeBy!))")
         print("What is the priority of the task? Input High or Low.")
-         let priorityInput = getPriority()
+        let priorityInput = getPriority()
         if priorityInput == "High" {
             
             priorityChoice = .High
@@ -73,16 +102,16 @@ class functions {
             priorityChoice = .Low
         }
         
-      
-        let newTask = Task(title: taskTitle!, description: newDescription!, dueDate: completeBy!, priority: priorityChoice! )
+        
+        let newTask = Task(title: taskTitle!, Taskdescription: newDescription!, dueDate: completeBy!, priority: priorityChoice! )
         taskArray.append(newTask)
-       
-    
-          
-           
         
         
-    print("Task added!")
+        
+        
+        
+        
+        print("Task added!")
     }
     
     //END OF ADD TASK
@@ -107,7 +136,7 @@ class functions {
     }
     func showTasks()
     {    print("These are your current tasks")
-         taskArray.printElements()
+        taskArray.printElements()
         
     }
     func listCompleted() {
@@ -118,9 +147,9 @@ class functions {
         else {
             print("These tasks are completed! Good work, lets keep it going!")
             completedTasks.printElements()
+        }
+        
     }
-    
-}
     func listUncompleted() {
         if uncompletedTasks.isEmpty {
             print("Looks like it's time for a break")
@@ -147,13 +176,13 @@ class functions {
         task.title = editedTitle
         print("How should the task have been described?")
         let editedDescription = readLine()!
-        task.description = editedDescription
-        print("Does the priority need to change, yes or no?")
+        task.Taskdescription = editedDescription
+        print("Does the priority need to change, yes or no? Any other input will result in no")
         var userAnswer = readLine()!
         if userAnswer == "Yes" || userAnswer == "Y" || userAnswer == "yes" || userAnswer == "y" {
-        print("What is the priority of the task? Input High or Low.")
+            print("What is the priority of the task? Input High or Low.")
             var priorityChoice: Task.PrioritySelection!
-            let priorityInputEdit = readLine()
+            let priorityInputEdit = getPriority()
             if priorityInputEdit == "High" {
                 
                 priorityChoice = .High
@@ -164,26 +193,73 @@ class functions {
                 priorityChoice = .Low
             }
             task.priority = priorityChoice
-           
+            
         }
-        print("Does the date the task needs to be done by need to change, yes or no?")
+       
+        print("Does the date the task needs to be done by need to change, yes or no? Any other input will result in no")
         var userAnswer2 = readLine()!
         if userAnswer2 == "Yes" || userAnswer2 == "Y" || userAnswer2 == "yes" || userAnswer2 == "y" {
             print("In how many days should the task completed by?")
             let currentCalander = Calendar.current
-            let numOfDays = Int(readLine()!)
-            var completeBy = currentCalander.date(byAdding: .day, value: numOfDays!, to: Date())
+            let numOfDays = getDay()
+            var completeBy = currentCalander.date(byAdding: .day, value: numOfDays, to: Date())
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy"
             task.dueDate = completeBy
             let dateString = dateFormatter.string(from: task.dueDate!)
+            
             print("\(task.title) should now be complete on \(dateString) ")
             
         }
         print("Task has been edited!")
         
     }
-   
+    func easter() {
+        print("""
+░░░░░░░░░░░░░░░░░░░▒▓▓█████████████▓▓▒░░░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░▒████▓▓▒▒░▒▒▒░▒▒▒▒▒▒▓▓████▓▒░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░▒███▓░░░░░░░░░░░░░░░░░░░░░░▒███████▓▓▒░░░░░░░░░░░
+░░░░░░░░░▒██▓░░░░▒▒███▓▓▒░░░░░░░░░░░░░▓▓▒▒▒▒▒▓██████▓░░░░░░░
+░░░░░░░▒██▓░░░▓███▓▒░░░░░░░░▒▒▒▒▒▒▒▒▒▒░░░░░░▒▓▓███▓████▒▒░░░
+░░░░░░██▓░░▒▓██▓░░▒▓██████▓░░░░░░░▒░░░░░░▒██▓▒░░░▓███▒▓▒░░░░
+░░░░░██░░▓███▒░░▒██▒░░░░▒▒██▓░░░░░░░░░░░██▒░░░░▒████▒█░░░░░░
+░░░░██░▒▓▒▓▓░░░██░░░░░░░░░░░█▓░░░░░░░░░██░░░░░░▒███░░█▒░░░░░
+░░░▓█░░░░░░░░░██░░░░░░░░░░░░▓█░░░░░░░░██░░░░░░░░░░░░░█▒░░░░░
+░░░█▓░░░░░░░░░█▒░░████░░░░░░░█▒░░░░░░░██░░░░░░░░░░░░███░░░░░
+░░▒█░░░░░░░▒▓▒█▓░▓████▓░░░░░▒█░░░░░░░░▒█▒░░░░░░░░░░██░█▒░░░░
+░░██░░░░░▒▓▒▓▒██▒▒▓▓▓░░░░░░░██░░░░░░░░░▒████▓███████▓░█▒░░░░
+░░█▓░░░░░▒░░░▒░▒██▓▒░░░░░▒██▓░░░░░░░░░░░░░░██▓░░░░░░▒██▓░░░░
+░░█░░░░░░░░░▓▒░░░░▒▓██████▓░░░░░░░░░░░░░░▒██░░░▓█▓▓▒░░░██░░░
+░▒█░░░░░░░░░░░░░░░░░░░░░░░░░░▓▒▓▒▒▒▒▒▓▓▓▓██░░▓█▓░▒▒██▒░░██░░
+░▓█░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▓▓▒░░██░░██▓░▒░▒░██░░▒█░░
+░██░░░░░░░░░░░░░░░░░░░░░░░▒▓▒▒▒▒▒▒▒▒░░░██░░▓█░█▓░█▒█▓█▓░░█░░
+░██░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒░▒▒░░▓█▓░░██░█▒▒█▒█▒▓█░░█░░
+░██░░░░░░░░░░░░░░░░░░░░░░░░▒░░░░░░░░░░▓█░░░█▒░░░░▒▒░░▒█░▓█░░
+░▒█░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒░░█▒░░█▒░░░░░░░░▓█░█▓░░
+░░█▓░▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓█░░█▒░░░░░░░░█░▒█░░░
+░░▓█░░▒░░▒▒░░▒░░░░░░░░░░░░░░░░░░░░░░░░░░█░░█▒░░░░░░░█▓░█▓░░░
+░░░█▒░░▒░░▒░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░░█░░█▒░░░░░░▓█░░█░░░░
+░░░██░░░▒░▒░░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░█░░█▒░░░░░░██░░█░░░░
+░░░░█▓░░░▒░▒░░░░▒▒░░░░░▒▒▒▒▒▒░░░░░░░░░░▒█░▒█░░░░░░░█▒░░█▓░░░
+░░░░▓█░░░░▒▒░░░░░▒▒░░░░░░▒▒▒▓▓▓▒░░░░░░░██░██░░░░░░░██░░▓█░░░
+░░░░░██░░░▒░▒░░░░░▒░░░░░░░░▒░▒▒▓█▒░░░░▒█░░█▓▒▓▓▓▒░░▓█░░░█▒░░
+░░░░░▒█▒░░░▒▒▒░░░░▒░░░░░░░░░░▒▒▒░▒▓░░░██░▒█░░░░▒▓▓░░██░░█▒░░
+░░░░░░▒█▒░░░▒░▒░░░▒░░░░░░▒▒▒░░░░▒▒░░░▒█░░██░░░░░░░█░▒█░░█▒░░
+░░░░░░░▓█░░░▒░▒░░░░▒▒░░░░▓▒▒▓▓▓▒░░▓▒░██░░██▒▒▒▒▓▒▓▓███░░█▒░░
+░░░░░░░░██░░░▒░▒░░░░░▒▒░░░░░░░░▓█▓░░░█▓░░██░▓█░█░█░░█▒░░█▒░░
+░░░░░░░░░██░░░░▒▒░░░░░░▒▒░░░░░░░░▒█▓░█▓░░▓█▒▒█▒█░█▒██░░▒█░░░
+░░░░░░░░░░██▒░░░░▒░░░▒░░░▒▒░░░░░░░░▒▓██░░░██░░░░▒▒██░░░██░░░
+░░░░░░░░░░░▓██░░░░░░░░▒▒░░░▒░░░░░░░░░▓█░░░░▓███▓▓██░░░██░░░░
+░░░░░░░░░░░░░▓██▒░░░░░░▒▒▒▒▒░░░░░░░░░░██░░░░░░▒▒▒░░░░██░░░░░
+░░░░░░░░░░░░░░░▓███▒░░░░░░░▒▒▒▒▒▒▒▒░░░░▓██▒░░░░░░░▒███░░░░░░
+░░░░░░░░░░░░░░░░░▒▓███▓▒░░░░░░░▒░░▒▒▒▒░░░▒██▓██████▓░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░▒████▓▒▒░░░░░░░░░░░░░░░▓██▒░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░▒▓████▓░░░░░░░▓█████▒░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒█████████▒░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒░░░░░░░░░░░░░░░░░░░░░░░
+""")
+    }
+    
 }
 
 

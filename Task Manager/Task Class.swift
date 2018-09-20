@@ -9,7 +9,7 @@
 import Foundation
 class Task {
     var title: String // stores title
-    var description: String
+    var Taskdescription: String
     var completed = false // tasks start as not completed
     var dueDate: Date?
     var priority: PrioritySelection
@@ -17,12 +17,17 @@ class Task {
     case High = 1
     case Low = 2
     }
-    init(title: String, description: String, dueDate: Date, priority:PrioritySelection ) {
+    init(title: String, Taskdescription: String, dueDate: Date?, priority:PrioritySelection ) {
         self.title = title
-        self.description = description
+        self.Taskdescription = Taskdescription
         self.dueDate = dueDate
         self.priority = priority
        
     }
+   
     
-}
+  
+    }
+
+
+
